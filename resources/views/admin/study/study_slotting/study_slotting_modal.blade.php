@@ -6,6 +6,7 @@
     <input type="hidden" name="post_housing" id="post_housing" value="{{ $study->post_housing }}">
     <input type="hidden" name="totalMale" id="totalMale" value="{{ $study->no_of_male_subjects }}">
     <input type="hidden" name="totalFemale" id="totalFemale" value="{{ $study->no_of_female_subjects }}">
+    <input type="hidden" name="cr_location" id="cr_location" value="{{ $study->cr_location }}">
 
     <div class="form-group mb-3">
         <label>Period No<span class="mandatory">*</span></label>
@@ -25,7 +26,7 @@
     @if($study->no_of_male_subjects > 0)
         <div class="form-group mb-3">
             <label>Male Clinical Ward Location<span class="mandatory">*</span></label>
-            <select class="form-select select2" name="male_clinical_ward_location[]" id="male_clinical_ward_location" multiple="multiple" required>
+            <select class="form-select select2 male_clinical_ward_location" name="male_clinical_ward_location[]" id="male_clinical_ward_location" multiple="multiple" required>
                 <option value="" disabled>Select Male Clinical Ward location</option>
                 @if(!is_null($crClinicalWardList))
                     @foreach ($crClinicalWardList as $cwlk => $cwlv)
@@ -33,14 +34,14 @@
                     @endforeach
                 @endif
             </select>
-            <span id="selectMaleClinicalWardLocation"></span>
+            <span id="selectMaleClinicalWardLocation" class="custom-male-error" style="color: red;"></span>
         </div>
     @endif
 
     @if($study->no_of_female_subjects > 0)
         <div class="form-group mb-3">
             <label>Female Clinical Ward Location<span class="mandatory">*</span></label>
-            <select class="form-select select2" name="female_clinical_ward_location[]" id="female_clinical_ward_location" multiple="multiple" required>
+            <select class="form-select select2 female_clinical_ward_location" name="female_clinical_ward_location[]" id="female_clinical_ward_location" multiple="multiple" required>
                 <option value="" disabled>Select Female Clinical Ward location</option>
                 @if(!is_null($crClinicalWardList))
                     @foreach ($crClinicalWardList as $cwlk => $cwlv)
@@ -48,7 +49,7 @@
                     @endforeach
                 @endif
             </select>
-            <span id="selectFemaleClinicalWardLocation"></span>
+            <span id="selectFemaleClinicalWardLocation" class="custom-female-error" style="color: red;"></span>
         </div>
     @endif
 
@@ -58,6 +59,38 @@
     </div>
 </form>
 <script type="text/javascript">
+
+    function checkCapacity() {
+        var checkInDate = $('#check_in_date_time').val();
+        var maleClinicalWards = $('#male_clinical_ward_location').val();
+        var femaleClinicalWards = $('#female_clinical_ward_location').val();
+
+        if(checkInDate != '') {
+
+            $.ajax({
+                url: '/sms-admin/clinical-slotting/view/check-clinical-wards-capacity',
+                method: 'POST',
+                data: {
+                    'checkin_date_time': checkInDate,
+                    'no_of_male_subject': $('#totalMale').val(),
+                    'no_of_female_subject': $('#totalFemale').val(),
+                    'cr_location': $('#cr_location').val(),
+                    'male_clinical_wards': maleClinicalWards,
+                    'female_clinical_wards': femaleClinicalWards,
+                },
+                success: function(data) {
+                    if(data.status == 'false') {
+                        $('#selectMaleClinicalWardLocation').text(data.maleErrorMessage);
+                        $('#selectFemaleClinicalWardLocation').text(data.femaleErrorMessage);
+                    } else {
+                        $('#selectMaleClinicalWardLocation, #selectFemaleClinicalWardLocation').text('');
+                    }
+                }
+            });
+        } else {
+            $('#selectMaleClinicalWardLocation, #selectFemaleClinicalWardLocation').text('');
+        }
+    }
 
     $(document).ready(function(){
 
@@ -119,14 +152,14 @@
 
         $('#addStudySlotting').on('submit', function(e){
 
-            if($('#addStudySlotting').valid()) {
+            if(($('#addStudySlotting').valid())) {
                 $('#openStudySlottingModal').modal('hide');
             }
         });
     });
 
     $(document).ready(function(){
-
+        
         $(document).on('change', '#period_no', function(){
             var periodNo = $(this).val();
 
@@ -135,44 +168,34 @@
             }
         });
 
-        $(document).on('change', '#male_clinical_ward_location', function(){
-            var maleClinicalWardLocation = $(this).val();
+        $(document).on('change', '.male_clinical_ward_location', function(e){
+            var selectedItems = $(this).val();
 
-            if(maleClinicalWardLocation != '') {
+            if (selectedItems.length > 0) {
                 $('#male_clinical_ward_location-error').text('');
+                $('#female_clinical_ward_location option').each(function(key, value){
+                    if(selectedItems.indexOf($(this).val()) != -1) {
+                        $(this).prop('disabled', true);
+                    } else {
+                        $(this).prop('disabled', false);
+                    }
+                });
+            } else {
+                $('#female_clinical_ward_location option').each(function(key, value){
+                    $(this).prop('disabled', false);
+                });
+            }
+
+            if($('#check_in_date_time').val() != '') {
+                checkCapacity();
             }
         });
 
-        $(document).on('change', '#female_clinical_ward_location', function(){
-            var femaleClinicalWardLocation = $(this).val();
+        $(document).on('change', '.female_clinical_ward_location', function(e){
+            var selectedItems = $(this).val();
 
-            if(femaleClinicalWardLocation != '') {
+            if (selectedItems.length > 0) {
                 $('#female_clinical_ward_location-error').text('');
-            }
-        });
-    });
-
-    $(document).ready(function(){
-        $(document).on('change', '#male_clinical_ward_location', function(){
-            var selectedItems = $(this).val();
-            if (selectedItems.length > 0) {
-                $('#female_clinical_ward_location option').each(function(key, value){
-                    if(selectedItems.indexOf($(this).val()) != -1) {
-                        $(this).prop('disabled', true);
-                    } else {
-                        $(this).prop('disabled', false);
-                    }
-                });
-            } else {
-                $('#female_clinical_ward_location option').each(function(key, value){
-                    $(this).prop('disabled', false);
-                });
-            }
-        });
-
-        $(document).on('change', '#female_clinical_ward_location', function(){
-            var selectedItems = $(this).val();
-            if (selectedItems.length > 0) {
                 $('#male_clinical_ward_location option').each(function(key, value){
                     if(selectedItems.indexOf($(this).val()) != -1) {
                         $(this).prop('disabled', true);
@@ -185,31 +208,18 @@
                     $(this).prop('disabled', false);
                 });
             }
+
+            if($('#check_in_date_time').val() != '') {
+                checkCapacity();
+            }
         });
     });
 
     $(document).ready(function(){
 
-        $('#check_in_date_time').on('change', function(){
-            var checkInDate = $(this).val();
-            var maleClinicalWards = $('#male_clinical_ward_location').val();
-            var femaleClinicalWards = $('#female_clinical_ward_location').val();
-
-            if((checkInDate != '') && (maleClinicalWards != '') && (femaleClinicalWards != '')) {
-                $('#check_in_date_time-error').text('');
-
-                $.ajax({
-                    url: '/sms-admin/clinical-slotting/view/check-clinical-wards-capacity',
-                    method: 'POST',
-                    data: {
-                        checkin_date_time: $(this).val(),
-                        male_clinical_wards: maleClinicalWards,
-                        female_clinical_wards: femaleClinicalWards,
-                    },
-                    success: function(data) {
-                        alert(data);
-                    }
-                });
+        $(document).on('change', '#check_in_date_time', function(e){
+            if($(this).val() != '') {
+                checkCapacity();
             }
         });
     });

@@ -143,8 +143,8 @@
 
                     @if($amasv->controlName->control_type == 'text')
                         <div class=" form-group mb-3 row">
-                            <label class="col-md-3 col-form-label" for="{{ $amasv->controlName->control_type . $count }}">
-                                {{ $amasv->source_question }}
+                            <label class="col-md-3" for="{{ $amasv->controlName->control_type . $count }}">
+                                {{ $amasv->source_question }} @if($amasv->is_mandatory == 1) <span class="mandatory">*</span> @endif
                             </label>
                             <div class="col-md-9">
                                 <input type="text" class="form-control text" name="{{ $amasv->controlName->control_type }}[{{ $amasv->id }}]" id="{{ $amasv->controlName->control_type }}[{{ $amasv->id }}]" value="{{ $data }}" autocomplete="off" data-is-mandatory = "{{ ($amasv->is_mandatory == '1') ? 'true' : 'false' }}"maxlength="250" style="width:80%;">  
@@ -159,8 +159,8 @@
 
                     @if($amasv->controlName->control_type == 'textarea')
                         <div class=" form-group mb-3 row">
-                            <label class="col-md-3 col-form-label" for="{{ $amasv->controlName->control_type . $count }}">
-                                {{ $amasv->source_question }}
+                            <label class="col-md-3" for="{{ $amasv->controlName->control_type . $count }}">
+                                {{ $amasv->source_question }} @if($amasv->is_mandatory == 1) <span class="mandatory">*</span> @endif
                             </label>
                             <div class="col-md-9">
                                 <textarea class="form-control textArea" autocomplete="off" name="{{ $amasv->controlName->control_type }}[{{ $amasv->id }}]" id="{{ $amasv->controlName->control_type }}[{{ $amasv->id }}]" data-is-mandatory="{{ ($amasv->is_mandatory == '1') ? 'true' : 'false' }}" maxlength="1000"
@@ -176,8 +176,8 @@
 
                     @if($amasv->controlName->control_type == 'date')
                         <div class=" form-group mb-3 row" >
-                            <label class="col-md-3 col-form-label" for="{{ $amasv->controlName->control_type . $count }}">
-                                {{ $amasv->source_question }}
+                            <label class="col-md-3" for="{{ $amasv->controlName->control_type . $count }}">
+                                {{ $amasv->source_question }} @if($amasv->is_mandatory == 1) <span class="mandatory">*</span> @endif
                             </label>
                             <div class="col-md-9">
                                 <input type="text" class="form-control metaDataDatepicker date" placeholder="yyyy-mm-dd" data-date-autoclose="true" data-date-format="dd mm yyyy" autocomplete="off" name="{{ $amasv->controlName->control_type }}[{{ $amasv->id }}]" id="{{ $amasv->controlName->control_type }}[{{ $amasv->id }}]" value="{{ (($data != '') ? date('d M Y', strtotime($data)) : '') }}" data-is-mandatory="{{ ($amasv->is_mandatory == '1') ? 'true' : 'false' }}"
@@ -193,8 +193,8 @@
 
                     @if($amasv->controlName->control_type == 'datetime')
                         <div class=" form-group mb-3 row" >
-                            <label class="col-md-3 col-form-label" for="{{ $amasv->controlName->control_type . $count }}">
-                                {{ $amasv->source_question }} 
+                            <label class="col-md-3" for="{{ $amasv->controlName->control_type . $count }}">
+                                {{ $amasv->source_question }} @if($amasv->is_mandatory == 1) <span class="mandatory">*</span> @endif
                             </label>
                             <div class="col-md-9">
                                 <input type="datetime-local" class="form-control dateTime" placeholder="yyyy-mm-dd" data-date-autoclose="true" data-date-format="yyyy-mm-dd" autocomplete="off"
@@ -210,8 +210,8 @@
 
                     @if($amasv->controlName->control_type == 'file')
                         <div class=" form-group mb-3 row" >
-                            <label class="col-md-3 col-form-label" for="{{ $amasv->controlName->control_type . $count }}">
-                                {{ $amasv->source_question }}
+                            <label class="col-md-3" for="{{ $amasv->controlName->control_type . $count }}">
+                                {{ $amasv->source_question }} @if($amasv->is_mandatory == 1) <span class="mandatory">*</span> @endif
                             </label>
                             <div class="col-md-9">
                                 <input type="file" class="form-control file" autocomplete="off" name="{{ $amasv->controlName->control_type }}[{{ $amasv->id }}]" id="{{ $amasv->controlName->control_type }}[{{ $amasv->id }}]" value="{{ $data }}" data-is-mandatory="{{ (($amasv->is_mandatory == '1') && ($data == ''))  ? 'true' : 'false' }}" accept=".pdf"  style="width:80%;">
@@ -236,8 +236,8 @@
 
                     @if($amasv->controlName->control_type == 'radio')
                         <div class=" form-group mb-3 row" >
-                            <label class="col-md-3 col-form-label" for="{{ $amasv->controlName->control_type . $count }}">
-                                {{ $amasv->source_question }}
+                            <label class="col-md-3" for="{{ $amasv->controlName->control_type . $count }}">
+                                {{ $amasv->source_question }} @if($amasv->is_mandatory == 1) <span class="mandatory">*</span> @endif
                             </label>
                             <div class="col-md-9" style="padding-top: 9px;width: 61%">
                                 @php
@@ -268,8 +268,8 @@
 
                     @if($amasv->controlName->control_type == 'checkbox')
                         <div class=" form-group mb-3 row" >
-                            <label class="col-md-3 col-form-label" for="{{ $amasv->controlName->control_type . $count }}">
-                                {{$amasv->source_question}}
+                            <label class="col-md-3" for="{{ $amasv->controlName->control_type . $count }}">
+                                {{$amasv->source_question}} @if($amasv->is_mandatory == 1) <span class="mandatory">*</span> @endif
                             </label>
                             <div class="col-md-9" style="padding-top: 9px;width: 61%">
                                 @php
@@ -305,8 +305,8 @@
 
                     @if($amasv->controlName->control_type == 'select')
                         <div class=" form-group mb-3 row">
-                            <label class="col-md-3 col-form-label" for="{{ $amasv->controlName->control_type . $count }}">
-                                {{ $amasv->source_question }}
+                            <label class="col-md-3" for="{{ $amasv->controlName->control_type . $count }}">
+                                {{ $amasv->source_question }} @if($amasv->is_mandatory == 1) <span class="mandatory">*</span> @endif
                             </label>
                             <div class="col-md-9">
                                 <select class="form-select select" name="{{ $amasv->controlName->control_type }}[{{ $amasv->id }}]" id="{{ $amasv->controlName->control_type }}[{{ $amasv->id }}]" data-is-mandatory="{{ ($amasv->is_mandatory == '1') ? 'true' : 'false' }}" style="width:80%;">
