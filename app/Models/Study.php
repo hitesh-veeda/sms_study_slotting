@@ -141,4 +141,8 @@ class Study extends Model
     public function scheduleDelay(){
         return $this->hasMany('App\Models\StudySchedule', 'study_id', 'id')->where('activity_status', 'DELAY')->where('is_active', 1)->where('is_delete', 0);
     }
+
+    public function studySlotting(){
+        return $this->hasMany('App\Models\StudyClinicalSlotting', 'study_id', 'id');
+    }
 }

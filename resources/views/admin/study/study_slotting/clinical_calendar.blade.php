@@ -1,5 +1,5 @@
 @extends('layouts.admin')
-@section('title', 'All Clinical Slotting')
+@section('title', 'Clinical Calendar List')
 @section('content')
     <div class="page-content">
         <div class="container-fluid">
@@ -8,7 +8,22 @@
             <div class="row">
                 <div class="col-12">
                     <div class="page-title-box d-sm-flex align-items-center justify-content-between">
-                        <h4 class="mb-sm-0 font-size-18">All Clinical Slotting</h4>
+                        <h4 class="mb-sm-0 font-size-18 col-3">Clinical Calendar List</h4>
+                        <div class="form-group row col-4">
+                            <div class="col-2 mt-2">
+                                <label><b>Location</b></label>
+                            </div>
+                            <div class="col-3">
+                                <select class="form-select" name="location" id="location">
+                                    <option value="">All</option>
+                                    @if(!is_null($locations))
+                                        @foreach ($locations as $lk => $lv)
+                                            <option value="{{ $lv->id }}">{{ $lv->location_name }}</option>
+                                        @endforeach
+                                    @endif
+                                </select>
+                            </div>
+                        </div>
                         <div class="page-title-right">
                             <ol class="breadcrumb m-0">
                                 <li class="breadcrumb-item">
@@ -17,7 +32,7 @@
                                     </a>
                                 </li>
                                 <li class="breadcrumb-item active">
-                                    Clinical Slotting
+                                    Clinical Calendar
                                 </li>
                             </ol>
                         </div>
@@ -112,15 +127,15 @@
                                     </div>
                                 </div>
 
-                                <div class="lnb-new-schedule float-sm-end ms-sm-3 mt-4 mt-sm-0">
+                                {{-- <div class="lnb-new-schedule float-sm-end ms-sm-3 mt-4 mt-sm-0">
                                     <button id="btn-new-schedule" type="button" class="btn btn-primary lnb-new-schedule-btn" data-toggle="modal">
                                         New schedule
                                     </button>
-                                </div>
+                                </div> --}}
 
                                 <div id="calendarList" class="lnb-calendars-d1 mt-4 mt-sm-0 me-sm-0 mb-4"></div>
 
-                                <div id="calendar" style="800px;"></div>
+                                <div id="calendar" style="height:1000px"></div>
 
                             </div>
                         </div>

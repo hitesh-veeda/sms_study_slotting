@@ -181,7 +181,7 @@
 
 <!-- Add Study Slotting modal -->
 <div class="modal fade bs-example-modal-center" data-bs-backdrop="static" data-bs-keyboard="false" id="openStudySlottingModal" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-xl">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title">Study Slotting</h5>
@@ -193,6 +193,52 @@
             <div class="modal-footer" style="justify-content: center;">
                 <button type="submit" class="btn btn-primary waves-effect waves-light mr-1 saveStudySlot">
                     Save
+                </button>
+                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">
+                    Cancel
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Add Study Slotting modal for calendar -->
+<div class="modal fade bs-example-modal-center" data-bs-backdrop="static" data-bs-keyboard="false" id="openCalendarStudySlottingModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Add Study Slotting</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body" id="showCalendarStudySlottingModal">
+                
+            </div>
+            <div class="modal-footer" style="justify-content: center;">
+                <button type="submit" class="btn btn-primary waves-effect waves-light mr-1 saveCalendarStudySlot">
+                    Save
+                </button>
+                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">
+                    Cancel
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Edit Study Slotting modal for calendar -->
+<div class="modal fade bs-example-modal-center" data-bs-backdrop="static" data-bs-keyboard="false" id="openEditCalendarStudySlottingModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Update Study Slotting</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body" id="showEditCalendarStudySlottingModal">
+                
+            </div>
+            <div class="modal-footer" style="justify-content: center;">
+                <button type="submit" class="btn btn-primary waves-effect waves-light mr-1 updateCalendarStudySlot">
+                    Update
                 </button>
                 <button type="button" class="btn btn-danger" data-bs-dismiss="modal">
                     Cancel

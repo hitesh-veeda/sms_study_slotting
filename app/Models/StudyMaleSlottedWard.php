@@ -13,6 +13,8 @@ class StudyMaleSlottedWard extends Model
 
     protected $connection = 'mysql';
 
+    protected $guarded = ['id'];
+
     public function maleLocationName() {
         return $this->hasOne('App\Models\ClinicalWardMaster', 'id', 'male_clinical_ward_id');
     }

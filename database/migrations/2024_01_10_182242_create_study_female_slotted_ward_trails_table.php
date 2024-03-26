@@ -18,6 +18,7 @@ class CreateStudyFemaleSlottedWardTrailsTable extends Migration
             $table->integer('study_female_slotted_ward_id');
             $table->integer('study_clinical_slotting_id');
             $table->integer('female_clinical_ward_id');
+            $table->integer('no_of_subject')->nullable();
             $table->timestamps();
         });
     }

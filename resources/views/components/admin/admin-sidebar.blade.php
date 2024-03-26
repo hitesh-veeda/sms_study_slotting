@@ -275,16 +275,23 @@
                             <span>Slotting</span>
                         </a>
                         <ul class="sub-menu" aria-expanded="false">
+                            @if (in_array('study-slot', $module))
+                                <li>
+                                    <a href="{{ route('admin.studySlotList') }}">
+                                        Study Slot
+                                    </a>
+                                </li>
+                            @endif
                             @if (in_array('clinical-slotting', $module))
                                 <li>
-                                    <a href="{{ route('admin.studySlottingList') }}">
+                                    <a href="{{ route('admin.clinicalSlottingList') }}">
                                         Clinical Slotting List
                                     </a>
                                 </li>
                             @endif
                             @if (in_array('clinical-calendar', $module))
                                 <li>
-                                    <a href="{{ route('admin.studyCalendarList') }}">
+                                    <a href="{{ route('admin.clinicalCalendarList') }}">
                                         Clinical Calendar
                                     </a>
                                 </li>

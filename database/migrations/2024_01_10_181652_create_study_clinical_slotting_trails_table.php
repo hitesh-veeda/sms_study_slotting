@@ -18,8 +18,8 @@ class CreateStudyClinicalSlottingTrailsTable extends Migration
             $table->integer('study_clinical_slotting_id');
             $table->integer('study_id');
             $table->integer('period_no');
-            $table->timestamp('check_in_date_time')->nullable();
-            $table->timestamp('check_out_date_time')->nullable();
+            $table->dateTime('check_in_date_time')->nullable();
+            $table->dateTime('check_out_date_time')->nullable();
             $table->integer('created_by_user_id')->nullable();
             $table->integer('updated_by_user_id')->nullable();
             $table->tinyInteger('is_active')->default(1);

@@ -137,7 +137,7 @@
     <script type="text/javascript" src="{{ asset('js/module/pre_study_projection.js') }}"></script>
 @endif
 
-@if (\Route::is('admin.studyCalendarList'))
+@if (\Route::is('admin.clinicalCalendarList'))
     <script src="https://cdn.jsdelivr.net/chance/1.0/chance.min.js"></script>
     <script type="text/javascript" src="{{ asset('libs/moment/min/moment.min.js') }}"></script>
     <script src="https://uicdn.toast.com/tui.code-snippet/latest/tui-code-snippet.js"></script>
@@ -157,7 +157,7 @@
 @endif
 
 <!-- Study Slotting js -->
-@if (\Route::is('admin.studyList') || Route::is('admin.addStudySlot'))
+@if (\Route::is('admin.studySlotList') || Route::is('admin.addStudySlot'))
     <script type="text/javascript" src="{{ asset('js/module/study_slotting.js') }}"></script>
 @endif
 

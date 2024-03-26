@@ -1,5 +1,5 @@
 @extends('layouts.admin')
-@section('title','All Study Slotting List')
+@section('title','All Clinical Slotting List')
 @section('content')
 
 <div class="page-content">
@@ -8,7 +8,7 @@
         <div class="row">
             <div class="col-12">
                 <div class="page-title-box d-flex align-items-center justify-content-between">
-                    <h4 class="mb-0 font-size-18">All Study Slotting List</h4>
+                    <h4 class="mb-0 font-size-18">All Clinical Slotting List</h4>
 
                     <div class="page-title-right">
                         <ol class="breadcrumb m-0">
@@ -18,7 +18,7 @@
                                 </a>
                             </li>
                             <li class="breadcrumb-item active">
-                                All Study Slotting List
+                                Clinical Slotting List
                             </li>
                         </ol>
                     </div>
@@ -31,13 +31,13 @@
             
             <div class="accordion-item">
                 <h2 class="accordion-header" id="headingOne">
-                    <button class="accordion-button fw-medium @if(isset($filter) && ($filter == 1)) @else collapsed @endif" type="button" data-bs-toggle="collapse" data-bs-target="#studySlottingCollapseFilter" aria-expanded="false" aria-controls="studySlottingCollapseFilter">
+                    <button class="accordion-button fw-medium @if(isset($filter) && ($filter == 1)) @else collapsed @endif" type="button" data-bs-toggle="collapse" data-bs-target="#clinicalSlottingCollapseFilter" aria-expanded="false" aria-controls="clinicalSlottingCollapseFilter">
                         Filters
                     </button>
                 </h2>
-                <div id="studySlottingCollapseFilter" class="accordion-collapse @if(isset($filter) && ($filter == 1)) @else collapse @endif" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+                <div id="clinicalSlottingCollapseFilter" class="accordion-collapse @if(isset($filter) && ($filter == 1)) @else collapse @endif" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
                     <div class="accordion-body">
-                        <form method="post" action="{{ route('admin.studySlottingList') }}" name="allStudySlottingListFilter" id="allStudySlottingListFilter">
+                        <form method="post" action="{{ route('admin.clinicalSlottingList') }}" name="allClinicalSlottingListFilter" id="allClinicalSlottingListFilter">
                             @csrf
                             <div class="row">
 
@@ -71,7 +71,7 @@
 
                                 @if(isset($filter) && ($filter == 1))
                                     <div class="col-md-1 pt-1">
-                                        <a href="{{ route('admin.studySlottingList') }}" class="btn btn-danger mt-4 cancel_button" id="filter" name="reset" value="reset">
+                                        <a href="{{ route('admin.clinicalSlottingList') }}" class="btn btn-danger mt-4 cancel_button" id="filter" name="reset" value="reset">
                                             Reset
                                         </a>
                                     </div>
@@ -92,20 +92,63 @@
                             <thead>
                                 <tr>
                                     <th>Sr. No</th>
+                                    @if($admin == 'yes')
+                                        <th>Action</th>
+                                    @else
+                                        @if($access->delete != '')
+                                            <th>Action</th>
+                                        @endif
+                                    @endif
                                     <th>Study No</th>
                                     <th>Period</th>
                                     <th>Location</th>
                                     <th>Male Clinical Wards</th>
                                     <th>Female Clinical Wards</th>
-                                    <th>Checkin Date And Time</th>
-                                    <th>Checkout Date And Time</th>
+                                    <th>Checkin Date Time</th>
+                                    <th>Checkout Date Time</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 @if(!is_null($studySlottingList))
                                     @foreach ($studySlottingList as $sslk => $sslv)
+                                        @php $isActualDateFilled = false; @endphp
                                         <tr>
                                             <td>{{ $loop->iteration }}</td>
+
+                                            @if((!is_null($sslv->studyNo)) && (!is_null($sslv->studyNo->schedule)))
+                                                @foreach ($sslv->studyNo->schedule as $key => $value)
+                                                    @if(($value->actual_start_date != '') && ($value->period_no == $sslv->period_no))
+                                                        @php
+                                                            $isActualDateFilled = true;
+                                                        @endphp
+                                                        @break
+                                                    @endif
+                                                @endforeach
+                                            @endif
+
+                                            @if($admin == 'yes')
+                                                <td>
+                                                    @if ($isActualDateFilled == true)
+                                                        ---
+                                                    @else
+                                                        <a class="btn btn-danger btn-sm waves-effect waves-light" href="{{ route('admin.deleteStudySlot', base64_encode($sslv->id)) }}" role="button" onclick="return confirm('Do you want to delete this clinical slot?');" title="Delete">
+                                                            <i class="bx bx-trash"></i>
+                                                        </a>
+                                                    @endif
+                                                </td>
+                                            @else
+                                                @if($access->delete != '')
+                                                    <td>
+                                                        @if ($isActualDateFilled == true)
+                                                            ---
+                                                        @else
+                                                            <a class="btn btn-danger btn-sm waves-effect waves-light" href="{{ route('admin.deleteStudySlot', base64_encode($sslv->id)) }}" role="button" onclick="return confirm('Do you want to delete this clinical slot?');" title="Delete">
+                                                                <i class="bx bx-trash"></i>
+                                                            </a>
+                                                        @endif
+                                                    </td>
+                                                @endif
+                                            @endif
 
                                             <td>
                                                 {{ (((!is_null($sslv->studyNo)) && ($sslv->studyNo->study_no != '')) ? $sslv->studyNo->study_no : '---') }}

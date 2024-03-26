@@ -580,11 +580,11 @@
                                                     </td>
                                                 @else
                                                     <td>
-                                                        @if((($sv->study_slotted == 'YES') && ($sv->tentative_clinical_date != '') && ($sv->no_of_subject != '') && ($sv->no_of_groups == 1) && ($sv->cr_location != 10) && ($sv->study_status != 'COMPLETED')) && ((Auth::guard('admin')->user()->role_id == 1) || (Auth::guard('admin')->user()->role_id == 2)))
+                                                        {{-- @if((($sv->study_slotted == 'YES') && ($sv->tentative_clinical_date != '') && ($sv->no_of_subject != '') && ($sv->no_of_groups == 1) && ($sv->cr_location != 10) && ($sv->study_status != 'COMPLETED')) && ((Auth::guard('admin')->user()->role_id == 1) || (Auth::guard('admin')->user()->role_id == 2)))
                                                             <a class="btn btn-primary btn-sm waves-effect waves-light addStudySlot" href="javascript:void(0)" role="button" title="Add Study Slot" data-id="{{ $sv->id }}">
                                                                 <i class="bx bx-calendar-event"></i>
                                                             </a>
-                                                        @endif
+                                                        @endif --}}
 
                                                         @if(!str_contains($sv->study_no, 'G'))
                                                             <a class="btn btn-primary waves-effect btn-sm waves-light" href="{{ route('admin.addCopyStudy',base64_encode($sv->id)) }}" role="button" title="Copy" onclick="return confirm('Are you sure you want to copy this study no - {{$sv->study_no}}?');">
@@ -633,11 +633,11 @@
                                             @else
                                                 @if((($access->add != '' && !str_contains($sv->study_no, 'G') && $sv->no_of_groups > 1)) || ($access->edit != '') || ($access->delete != ''))
                                                     <td>
-                                                        @if((($sv->study_slotted == 'YES') && ($sv->tentative_clinical_date != '') && ($sv->no_of_subject != '') && ($sv->no_of_groups == 1) && ($sv->cr_location != 10) && ($sv->study_status != 'COMPLETED')) && ((Auth::guard('admin')->user()->role_id == 1) || (Auth::guard('admin')->user()->role_id == 2)))
+                                                        {{-- @if((($sv->study_slotted == 'YES') && ($sv->tentative_clinical_date != '') && ($sv->no_of_subject != '') && ($sv->no_of_groups == 1) && ($sv->cr_location != 10) && ($sv->study_status != 'COMPLETED')) && ((Auth::guard('admin')->user()->role_id == 1) || (Auth::guard('admin')->user()->role_id == 2)))
                                                             <a class="btn btn-primary btn-sm waves-effect waves-light addStudySlot" href="javascript:void(0)" role="button" title="Add Study Slot" data-id="{{ $sv->id }}">
                                                                 <i class="bx bx-calendar-event"></i>
                                                             </a>
-                                                        @endif
+                                                        @endif --}}
 
                                                         @if($access->add != '' && !str_contains($sv->study_no, 'G') && $sv->no_of_groups > 1)
                                                             <a class="btn btn-primary waves-effect btn-sm waves-light" href="{{ route('admin.copyStudy',base64_encode($sv->id)) }}" role="button" title="Copy" onclick="return confirm('Are you sure you want to copy this study no - {{$sv->study_no}}?');">

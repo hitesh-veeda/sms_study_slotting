@@ -229,11 +229,28 @@
 		Route::match(['get', 'post'], '/view/all-activity-metadata-list', 'Master\ActivityMetadataController@allActivityMetadataList')->name('admin.allActivityMetadataList');
 	});
 
-	// Study Slotting Routes
+	// Clinical Slotting Routes
 	Route::group(['prefix' => 'clinical-slotting'], function() {
-		Route::match(['get', 'post'], '/view/study-slotting-list', 'Study\StudySlottingController@studySlottingList')->name('admin.studySlottingList');
-		Route::get('/view/study-calendar-list', 'Study\StudySlottingController@studyCalendarList')->name('admin.studyCalendarList');
+		Route::match(['get', 'post'], '/view/clinical-slotting-list', 'Study\StudySlottingController@clinicalSlottingList')->name('admin.clinicalSlottingList');
+	});
+
+	// Clinical Calendar Routes
+	Route::group(['prefix' => 'clinical-calendar'], function() {
+		Route::match(['get', 'post'], '/view/clinical-calendar-list', 'Study\StudySlottingController@clinicalCalendarList')->name('admin.clinicalCalendarList');
+		Route::post('/add/open-study-slot-modal-for-calendar', 'Study\StudySlottingController@openStudySlotModalForCalendar')->name('admin.openStudySlotModalForCalendar');
+		Route::post('/view/get-study-and-ward-data', 'Study\StudySlottingController@getStudyAndWardData')->name('admin.getStudyAndWardData');
+		Route::post('/add/save-open-study-slot-modal-for-calendar', 'Study\StudySlottingController@saveOpenStudySlotModalForCalendar')->name('admin.saveOpenStudySlotModalForCalendar');
+		Route::get('/edit/open-edit-study-slot-modal-for-calendar/{id}', 'Study\StudySlottingController@openEditStudySlotModalForCalendar')->name('admin.openEditStudySlotModalForCalendar');
+		Route::post('/edit/update-open-study-slot-modal-for-calendar', 'Study\StudySlottingController@updateOpenStudySlotModalForCalendar')->name('admin.updateOpenStudySlotModalForCalendar');
+		Route::post('/view/check-clinical-wards-capacity-for-calendar', 'Study\StudySlottingController@checkClinicalWardsCapacityForCalendar')->name('admin.checkClinicalWardsCapacityForCalendar');
+		Route::get('/delete/delete-clinical-calendar-slot/{id}', 'Study\StudySlottingController@deleteClinicalCalendarSlot')->name('admin.deleteClinicalCalendarSlot');
+	});
+
+	// Study Slot Routes
+	Route::group(['prefix' => 'study-slot'], function() {
+		Route::match(['get', 'post'], '/view/study-slot-list', 'Study\StudySlottingController@studySlotList')->name('admin.studySlotList');
 		Route::get('/add/add-study-slot/{id}', 'Study\StudySlottingController@addStudySlot')->name('admin.addStudySlot');
 		Route::post('/add/save-study-slot', 'Study\StudySlottingController@saveStudySlot')->name('admin.saveStudySlot');
+		Route::get('/delete/delete-study-slot/{id}', 'Study\StudySlottingController@deleteStudySlot')->name('admin.deleteStudySlot');
 		Route::post('/view/check-clinical-wards-capacity', 'Study\StudySlottingController@checkClinicalWardsCapacity')->name('admin.checkClinicalWardsCapacity');
 	});
